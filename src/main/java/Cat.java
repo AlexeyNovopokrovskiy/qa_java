@@ -1,12 +1,12 @@
-package com.example;
+package java;
 
 import java.util.List;
 
-public class Cat extends com.example.Feline {
+public class Cat extends Feline {
 
-    com.example.Predator predator;
+    Predator predator;
 
-    public Cat(com.example.Feline feline) {
+    public Cat(Feline feline) {
         this.predator = feline;
     }
 
