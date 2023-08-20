@@ -5,10 +5,6 @@ package com.example;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
@@ -32,13 +28,13 @@ public class FelineTest {
         assertEquals(result,expectedResult);
     }
     @Test
-    public void getKittens(){
+    public void getOneKitten(){
         Feline cats = new Feline();
         int result = cats.getKittens();
         assertEquals(result,1);
     }
     @Test
-    public void getKittensX(){
+    public void getSomeKittens(){
         Feline cats = new Feline();
         int x = 10;
         int result = cats.getKittens(x);

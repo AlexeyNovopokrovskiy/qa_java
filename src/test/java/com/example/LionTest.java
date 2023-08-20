@@ -1,5 +1,6 @@
 package com.example;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.junit.runners.Parameterized;
 
+import java.lang.reflect.Executable;
 import java.util.List;
 
 @RunWith(Parameterized.class)
@@ -24,8 +26,8 @@ public class LionTest {
     public static Object[][] param() {
         return new Object[][]{
                 {"Самец",true},
-                {"Самка",false},
-                {"else",false}
+                {"Самка",false}
+
         };
     }
 
@@ -35,115 +37,63 @@ public class LionTest {
     }
 
     @Test
-    public void getKittens() {
+    public void getKittens() throws Exception {
         Feline fel = Mockito.mock(Feline.class);
-        Lion savannah;
-
-        {
-            try {
-                savannah = new Lion(sex, fel);
-
-                Mockito.when(savannah.getKittens()).thenReturn(1);
-                assertEquals(savannah.getKittens(),1);
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
+        Lion savannah = new Lion(sex, fel);
+        Mockito.when(savannah.getKittens()).thenReturn(1);
+        assertEquals(savannah.getKittens(),1);
     }
 
     @Test
-    public void doesHaveMane() {
+    public void doesHaveMane() throws Exception {
         Feline fel = Mockito.mock(Feline.class);
-        Lion savannah;
-
-        {
-            try {
-                savannah = new Lion(sex, fel);
-                assertEquals(savannah.doesHaveMane(), mane);
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
+        Lion savannah = new Lion(sex, fel);
+        assertEquals(savannah.doesHaveMane(), mane);
 
     }
 
     @Test
-    public void getFood() {
+    public void getFood() throws Exception {
+
+
         Feline fel = Mockito.mock(Feline.class);
-        Lion savannah;
+        Lion savannah = new Lion(sex, fel);
 
-
-        try {
-            savannah = new Lion(sex, fel);
-
-            Mockito.when(fel.getFood("Хищник")).thenReturn(List.of("Animals", "Birds", "Fish"));
-            List<String> expectedResult = List.of("Animals", "Birds", "Fish");
-            List<String> result = savannah.getFood();
-            assertEquals(result, expectedResult);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-/*
- @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+        Mockito.when(fel.getFood("Predator")).thenReturn(List.of("Animals", "Birds", "Fish"));
+        List<String> expectedResult = List.of("Animals", "Birds", "Fish");
+        List<String> result = savannah.getFood();
+        assertEquals(result, expectedResult);
     }
 
-    @Test
-    public void getKittens() {
-        Feline spyFel = Mockito.spy(new Feline());
-        Lion savannah;
+    @Test (expected = Exception.class)
+    public void getExceptionOnWrongSex() throws Exception {
 
-        {
-            try {
-                savannah = new Lion(sex, spyFel);
-                assertEquals(savannah.getKittens(),1);
+       String s = "Сам";
+       Feline fel = Mockito.mock(Feline.class);
+       Lion lionFail = new Lion(s, fel);
 
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+    }
+
+    /*@Test
+    public void getExceptionOnWrongSexV2() {
+
+        try{
+            String s = "Сам";
+            Feline fel = Mockito.mock(Feline.class);
+            Lion lionFail = new Lion(s, fel);
+            Assert.fail("Пол должен быть некорректным");
+        }catch (Exception e){
+
+
+            assertEquals("Используйте допустимые значения пола животного - самей или самка",e.getMessage());
         }
 
-    }
-
-    @Test
-    public void doesHaveMane() {
-        Feline spyFel = Mockito.spy(new Feline());
-        Lion savannah;
-
-        {
-            try {
-                savannah = new Lion(sex, spyFel);
-                assertEquals(savannah.doesHaveMane(), mane);
-
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-    }
-
-    @Test
-    public void getFood() {
-        Feline spyFel = Mockito.spy(new Feline());
-        Lion savannah;
+    }*/
 
 
-        try {
-        savannah = new Lion(sex, spyFel);
-            List<String> expectedResult = List.of("Животные", "Птицы", "Рыба");
-            List<String> result = savannah.getFood();
-            assertEquals(result, expectedResult);
-            //System.out.println(savannah.getFood());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-*/
+
 
 
 }
+
+
